@@ -30,8 +30,8 @@ def main():
     #     run_test_init()
     # if m1_tests.is_implemented('get_distance_from'):
     #     run_test_get_distance_from()
-    if m1_tests.is_implemented('swell_or_shrink_once'):
-        run_test_swell_or_shrink_once()
+    # if m1_tests.is_implemented('swell_or_shrink_once'):
+    #     run_test_swell_or_shrink_once()
     if m1_tests.is_implemented('swell_or_shrink_repeatedly', 4):
         run_test_swell_or_shrink_repeatedly()
     if m1_tests.is_implemented('swallow'):
@@ -350,6 +350,12 @@ class CircleChanger(object):
             return_amount = -amount_to_swell_or_shrink
             self.swell_or_shrink_once(return_amount)
             self.draw()
+        # Pretty picture
+        # for k in range(times_to_swell_or_shrink):
+        #     self.swell_or_shrink_once(amount_to_swell_or_shrink)
+        #     self.draw()
+        #     self.swell_or_shrink_once(-amount_to_swell_or_shrink)
+        #     self.draw()
 
     def swallow(self, other_circle_changer):
         """
@@ -377,7 +383,7 @@ class CircleChanger(object):
             :rtype CircleChanger
         """
         ################################################################
-        # TODO: 6.
+        # DONE: 6.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the   run_test_swallow   function (below).
         #   Third, implement and test this method.
@@ -387,6 +393,7 @@ class CircleChanger(object):
         #   the center and radius of the new CircleChanger.
         #   NO CREDIT if you use the distance formula here.
         ################################################################
+
 
     def change_color(self, index_of_color):
         """
