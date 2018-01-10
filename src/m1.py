@@ -32,10 +32,10 @@ def main():
     #     run_test_get_distance_from()
     # if m1_tests.is_implemented('swell_or_shrink_once'):
     #     run_test_swell_or_shrink_once()
-    if m1_tests.is_implemented('swell_or_shrink_repeatedly', 4):
-        run_test_swell_or_shrink_repeatedly()
-    if m1_tests.is_implemented('swallow'):
-        run_test_swallow()
+    # if m1_tests.is_implemented('swell_or_shrink_repeatedly', 4):
+    #     run_test_swell_or_shrink_repeatedly()
+    # if m1_tests.is_implemented('swallow'):
+    #     run_test_swallow()
     if m1_tests.is_implemented('change_color'):
         run_test_change_color()
     if m1_tests.is_implemented('change_to_original_color'):
@@ -85,7 +85,6 @@ class CircleChanger(object):
         """
         self.animation_factor = 1  # Smaller => faster animations
         self.seconds_to_sleep = 0.5  # Default for each call to draw
-
         # --------------------------------------------------------------
         # Change the above "animation_factor" if the animations
         # go too fast or too slow for your tastes.  Setting it to N
@@ -105,7 +104,7 @@ class CircleChanger(object):
         self.circle = rg.Circle(rg.Point(x, y), radius)
         self.colors = colors
         self.circle.fill_color = fill_color
-
+        # The stuff below is bad style, but illustrative of the principle of repeated storage.
         # self.x = x
         # self.y = y
         # self.radius = radius
@@ -113,6 +112,7 @@ class CircleChanger(object):
         # # which hasn't been made yet
         # x = self.x
         # self.circle = rg.Cirlce(self.x, self.y)
+
     def __repr__(self):
         """
         What comes in:
@@ -350,10 +350,13 @@ class CircleChanger(object):
             return_amount = -amount_to_swell_or_shrink
             self.swell_or_shrink_once(return_amount)
             self.draw()
-        # Pretty picture
+        # Pretty picture that my friend TO DO 40: Ask his name
+        # when he implemented an incorrect solution. I kind of like the animation better than the required one haha
+
         # for k in range(times_to_swell_or_shrink):
         #     self.swell_or_shrink_once(amount_to_swell_or_shrink)
         #     self.draw()
+        # for k in range(times_to_swell_or_shrink):
         #     self.swell_or_shrink_once(-amount_to_swell_or_shrink)
         #     self.draw()
 
@@ -372,7 +375,8 @@ class CircleChanger(object):
                      -- the center of this CircleChanger's circle to
                      -- the center of the other CircleChanger's circle.
                 -- has 'red' as its fill color
-             -- whose tuple of colors a new tuple
+             -- whose tuple of colors *is* a new tuple
+             TO DO 43: decide if it's worth it to point out stupid spelling shit like this
                   that is this CircleChanger's tuple of colors
                   plus (that is, concatenated with)
                   the other CircleChanger's tuple of colors.
@@ -393,7 +397,32 @@ class CircleChanger(object):
         #   the center and radius of the new CircleChanger.
         #   NO CREDIT if you use the distance formula here.
         ################################################################
+        # TO DO 44: Question.
+        # IS the __init__ method run each time that a new function is defined (well, run, but then called? because I
+        # was getting confused why there exists a self.circle within each function definition!
+        # NOTE QUESTION: why it's self.colors not self.circle.colors, why it's not self.other_circle_changer_colors
+        # My original way:
+        # The circle that is about to get changed:
+        # circle = rg.Circle(rg.Point((self.circle.center.x + other_circle_changer.circle.center.x)/2,
+        #                             (self.circle.center.y + other_circle_changer.circle.center.y)/2),
+        #                    self.circle.center.get_distance_from(other_circle_changer.circle.center)/2)
 
+        # The better way:
+        # Made this line unnecessary by passing in the string  'red' to the CircleChanger function assigned to
+        # created_circle
+        # circle.fill_color = 'red'
+        # Code: self.circle.fill_color = 'red'
+        # notice that the tuple 'colors' is the parameter passed into the CircleChanger __init__, and modified by this
+        #  swallow function (the colors = self.colors + ... statement
+
+        center = self.circle.center.halfway_to(other_circle_changer.circle.center)
+        radius = self.circle.center.get_distance_from(other_circle_changer.circle.center) / 2
+        circle = rg.Circle(center, radius)
+        circle.fill_color = 'red'
+        new_colors_tuple = self.colors + other_circle_changer.colors
+        created_circle = CircleChanger(circle.center.x, circle.center.y, radius, circle.fill_color, new_colors_tuple)
+
+        return created_circle
 
     def change_color(self, index_of_color):
         """
@@ -415,11 +444,12 @@ class CircleChanger(object):
             :type index_of_color: int
         """
         ################################################################
-        # TODO: 7.
+        # done: 7.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the   run_test_change_color   function (below).
         #   Third, implement and test this method.
         ################################################################
+        self.circle.fill_color = self.colors[index_of_color]
 
     def change_to_original_color(self):
         """
@@ -432,7 +462,7 @@ class CircleChanger(object):
                was constructed.
         """
         ################################################################
-        # TODO: 8.
+        # DONE: 8.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the   run_test_change_to_original_color   function
         #   (below).  Third, implement and test this method.
