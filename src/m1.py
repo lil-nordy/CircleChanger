@@ -26,16 +26,16 @@ def main():
     That is, a  TEST   function will not be called
     until you begin work on the code that it is testing.
     """
-    # if m1_tests.is_implemented('__init__', 20):
-    #     run_test_init()
-    # if m1_tests.is_implemented('get_distance_from'):
-    #     run_test_get_distance_from()
-    # if m1_tests.is_implemented('swell_or_shrink_once'):
-    #     run_test_swell_or_shrink_once()
-    # if m1_tests.is_implemented('swell_or_shrink_repeatedly', 4):
-    #     run_test_swell_or_shrink_repeatedly()
-    # if m1_tests.is_implemented('swallow'):
-    #     run_test_swallow()
+    if m1_tests.is_implemented('__init__', 20):
+        run_test_init()
+    if m1_tests.is_implemented('get_distance_from'):
+        run_test_get_distance_from()
+    if m1_tests.is_implemented('swell_or_shrink_once'):
+        run_test_swell_or_shrink_once()
+    if m1_tests.is_implemented('swell_or_shrink_repeatedly', 4):
+        run_test_swell_or_shrink_repeatedly()
+    if m1_tests.is_implemented('swallow'):
+        run_test_swallow()
     if m1_tests.is_implemented('change_color'):
         run_test_change_color()
     if m1_tests.is_implemented('change_to_original_color'):
@@ -104,6 +104,8 @@ class CircleChanger(object):
         self.circle = rg.Circle(rg.Point(x, y), radius)
         self.colors = colors
         self.circle.fill_color = fill_color
+        self.original_fill_color = fill_color
+        self.current_color = -1
         # The stuff below is bad style, but illustrative of the principle of repeated storage.
         # self.x = x
         # self.y = y
@@ -375,7 +377,7 @@ class CircleChanger(object):
                      -- the center of this CircleChanger's circle to
                      -- the center of the other CircleChanger's circle.
                 -- has 'red' as its fill color
-             -- whose tuple of colors *is* a new tuple
+             -- whose tuple of colors *is* *spelling*a new tuple
              TO DO 43: decide if it's worth it to point out stupid spelling shit like this
                   that is this CircleChanger's tuple of colors
                   plus (that is, concatenated with)
@@ -467,6 +469,7 @@ class CircleChanger(object):
         #   Second, READ the   run_test_change_to_original_color   function
         #   (below).  Third, implement and test this method.
         ################################################################
+        self.circle.fill_color = self.original_fill_color
 
     def change_to_next_color_in_tuple(self):
         """
@@ -477,7 +480,7 @@ class CircleChanger(object):
           -- The first time that this method is called, this
                CircleChanger's circle's fill color changes to the first
                (beginning) color in this CircleChanger's tuple of colors.
-          -- Each time therafter that this method is called, this
+          -- Each time therafter *thereafter* *spelling* that this method is called, this
                CircleChanger's circle's fill color changes to the NEXT
                color in this CircleChanger's tuple of colors.
           -- It "wraps" when it reaches the end of the list.
@@ -501,12 +504,13 @@ class CircleChanger(object):
         fill color have no effect on or interaction with this method.
         """
         ################################################################
-        # TODO: 9.
+        # DONE: 9.
         #   First, READ the doc-string (specification) above.
         #   Second, READ the   run_test_change_to_next_color_in_tuple
         #   function (below).  Third, implement and test this method.
         ################################################################
-
+        self.current_color += 1
+        self.circle.fill_color = self.colors[self.current_color % len(self.colors)]
 
 ########################################################################
 # The TEST functions for the  CircleChanger  class begin here.
